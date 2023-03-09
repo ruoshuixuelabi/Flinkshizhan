@@ -16,7 +16,7 @@ object Demo05_SQL_Hive2 {
         val env = StreamExecutionEnvironment.getExecutionEnvironment
         val settings = EnvironmentSettings
           .newInstance()
-          .useBlinkPlanner()
+//          .useBlinkPlanner()
           .inStreamingMode()
           .build()
         val tableEnv = StreamTableEnvironment.create(env, settings)
@@ -34,9 +34,9 @@ object Demo05_SQL_Hive2 {
         tableEnv.useCatalog("myhive")
 
         //3.执行SQL
-//        val result = tableEnv.executeSql(
-//            "insert into user_info values(3,'wangwu')"
-//        )
+        //        val result = tableEnv.executeSql(
+        //            "insert into user_info values(3,'wangwu')"
+        //        )
         val resultTable:Table=tableEnv.sqlQuery(" select count(distinct monitor_id) from monitor_flow_action where `date`>='2018-04-26' and `date`<='2018-04-27'")
         //结果表转为流
         val resultStream=tableEnv.toRetractStream[Row](resultTable)

@@ -1,7 +1,5 @@
 package demo
-
 import java.sql.{Connection, DriverManager}
-
 /**
   * JDBC工具类
   */
@@ -10,7 +8,6 @@ object JDBCUtils {
     private val url = "jdbc:mysql://localhost:3306/student_db"
     private val username = "root"
     private val password = "123456"
-
     /**
       * 获得数据库连接
       */
@@ -19,6 +16,4 @@ object JDBCUtils {
         val conn = DriverManager.getConnection(url, username, password)
         conn
     }
-
-
 }

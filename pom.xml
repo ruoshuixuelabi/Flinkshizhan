@@ -11,8 +11,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <scala.version>2.11.8</scala.version>
-        <flink.version>1.13.0</flink.version>
+        <scala.version>2.12.17</scala.version>
+        <flink.version>1.16.1</flink.version>
     </properties>
     <dependencies>
         <dependency>
@@ -23,45 +23,54 @@
         <!--引入Scala版本的批量计算依赖库-->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-scala_2.11</artifactId>
+            <artifactId>flink-scala_2.12</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <!--引入Scala版本的流式计算依赖库-->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-streaming-scala_2.11</artifactId>
+            <artifactId>flink-streaming-scala_2.12</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <!--解决Flink升级1.11报错No ExecutorFactory found to execute the application-->
         <!--从Flink1.11开始，移除了flink-streaming-java或flink-streaming-scala对flink-clients的依赖，所以加上这个依赖就好了。-->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-clients_2.11</artifactId>
+            <artifactId>flink-clients</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <!--Java语言的Table和SQL API，结合 DataStream/DataSet API一起使用-->
-       <!-- <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-api-java-bridge_2.11</artifactId>
-            <version>${flink.version}</version>
-            <scope>provided</scope>
-        </dependency>-->
+<!--         <dependency>-->
+<!--             <groupId>org.apache.flink</groupId>-->
+<!--             <artifactId>flink-table-api-java-bridge</artifactId>-->
+<!--             <version>${flink.version}</version>-->
+<!--             <scope>provided</scope>-->
+<!--         </dependency>-->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-api-scala-bridge_2.11</artifactId>
+            <artifactId>flink-table-api-scala-bridge_2.12</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-planner-blink_2.11</artifactId>
+            <artifactId>flink-table-planner_2.12</artifactId>
             <version>${flink.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-planner_2.12</artifactId>
+            <version>1.16.1</version>
+        </dependency>
+        <!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-table-planner-blink_2.12</artifactId>-->
+<!--            <version>${flink.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-common</artifactId>
             <version>${flink.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
         <!--使用StreamExecutionEnvironment的readTextFile方法读取文件报错，需要引入以下依赖-->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -82,7 +91,7 @@
         <!--整合Kafka需要的依赖库-->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-kafka_2.11</artifactId>
+            <artifactId>flink-connector-kafka</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <!--读取Kafka中的JSON数据时，用于对JSON的解析-->
@@ -100,7 +109,7 @@
         <!-- RocksDBStateBackend所需依赖 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-statebackend-rocksdb_2.11</artifactId>
+            <artifactId>flink-statebackend-rocksdb</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <!--Flink SQL操作Hive依赖 -->
@@ -127,38 +136,39 @@
         <!-- Gelly图计算库 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-gelly-scala_2.11</artifactId>
-            <version>1.13.0</version>
-        </dependency> 
+            <artifactId>flink-gelly-scala_2.12</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
+        <!-- Scala依赖-->
     </dependencies>
     <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <!--<testSourceDirectory>src/test/scala</testSourceDirectory>-->
+        <!--        <sourceDirectory>src/main/scala</sourceDirectory>-->
+        <!--        &lt;!&ndash;<testSourceDirectory>src/test/scala</testSourceDirectory>&ndash;&gt;-->
         <plugins>
-            <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <scalaVersion>${scala.version}</scalaVersion>
-                    <args>
-                        <arg>-target:jvm-1.8</arg>
-                    </args>
-                </configuration>
-            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.scala-tools</groupId>-->
+            <!--                <artifactId>maven-scala-plugin</artifactId>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <goals>-->
+            <!--                            <goal>compile</goal>-->
+            <!--                            <goal>testCompile</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--                <configuration>-->
+            <!--                    <scalaVersion>${scala.version}</scalaVersion>-->
+            <!--                    <args>-->
+            <!--                        <arg>-target:jvm-1.8</arg>-->
+            <!--                    </args>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
             <!--Maven打包插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -185,34 +195,34 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-eclipse-plugin</artifactId>
-              <configuration>
-                <downloadSources>true</downloadSources>
-                <buildcommands>
-                  <buildcommand>ch.epfl.lamp.sdt.core.scalabuilder</buildcommand>
-                </buildcommands>
-                <additionalProjectnatures>
-                  <projectnature>ch.epfl.lamp.sdt.core.scalanature</projectnature>
-                </additionalProjectnatures>
-                <classpathContainers>
-                  <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
-                  <classpathContainer>ch.epfl.lamp.sdt.launching.SCALA_CONTAINER</classpathContainer>
-                </classpathContainers>
-              </configuration>
-            </plugin>-->
+            <!--            &lt;!&ndash;<plugin>-->
+            <!--              <groupId>org.apache.maven.plugins</groupId>-->
+            <!--              <artifactId>maven-eclipse-plugin</artifactId>-->
+            <!--              <configuration>-->
+            <!--                <downloadSources>true</downloadSources>-->
+            <!--                <buildcommands>-->
+            <!--                  <buildcommand>ch.epfl.lamp.sdt.core.scalabuilder</buildcommand>-->
+            <!--                </buildcommands>-->
+            <!--                <additionalProjectnatures>-->
+            <!--                  <projectnature>ch.epfl.lamp.sdt.core.scalanature</projectnature>-->
+            <!--                </additionalProjectnatures>-->
+            <!--                <classpathContainers>-->
+            <!--                  <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>-->
+            <!--                  <classpathContainer>ch.epfl.lamp.sdt.launching.SCALA_CONTAINER</classpathContainer>-->
+            <!--                </classpathContainers>-->
+            <!--              </configuration>-->
+            <!--            </plugin>&ndash;&gt;-->
         </plugins>
     </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <configuration>
-                    <scalaVersion>${scala.version}</scalaVersion>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
+    <!--    <reporting>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.scala-tools</groupId>-->
+    <!--                <artifactId>maven-scala-plugin</artifactId>-->
+    <!--                <configuration>-->
+    <!--                    <scalaVersion>${scala.version}</scalaVersion>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </reporting>-->
 </project>

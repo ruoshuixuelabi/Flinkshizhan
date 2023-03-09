@@ -19,6 +19,7 @@ object UnionExample {
         )
         //合并两个数据流
         val unionDataStream=dataStream1.union(dataStream2)
+        dataStream1.broadcast()
         unionDataStream.print()
 //        (0,0,0)
 //        (5,5,5)

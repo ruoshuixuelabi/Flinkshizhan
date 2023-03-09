@@ -1,8 +1,8 @@
 package demo
 
-import java.sql.{Connection, PreparedStatement}
+import demo.Domain.Student
 
-import flink.demo.Domain.Student
+import java.sql.{Connection, PreparedStatement}
 import org.apache.flink.configuration.Configuration
 import org.apache.flink.streaming.api.functions.source.{RichSourceFunction, SourceFunction}
 

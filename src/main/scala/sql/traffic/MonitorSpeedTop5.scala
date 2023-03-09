@@ -20,7 +20,7 @@ object MonitorSpeedTop5 {
         //创建EnvironmentSettings实例并设置参数
         val settings = EnvironmentSettings
           .newInstance()//创建一个用于创建EnvironmentSettings实例的构建器
-          .useBlinkPlanner()//将Blink计划器设置为所需的模块（默认）
+//          .useBlinkPlanner()//将Blink计划器设置为所需的模块（默认）
           .inStreamingMode()//设置组件以流模式工作。默认启用
           .build()//创建一个不可变的EnvironmentSettings实例
         val tableEnv: StreamTableEnvironment = StreamTableEnvironment.create(env, settings)
