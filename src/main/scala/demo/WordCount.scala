@@ -22,7 +22,6 @@ object WordCount {
     val resultDataSet: DataSet[(String, Int)] = groupedDataSet.sum(1)
     //第四步：打印结果到控制台
     resultDataSet.print()
-
     //或者
     //对每一组数据聚合，每一组数据将传入到group中,group类型：Iterator(String, Int)
     /*groupedDataSet.reduceGroup(group=>{
